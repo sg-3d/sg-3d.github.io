@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="SG3D: Task-oriented Sequential Grounding in 3D Scenes">
+  <meta name="keywords" content="3D visual grounding, 3D scene understanding, vision and language, grounded task planning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SG3D</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N03WWE2F44"></script> <!-- TODO: change website -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-N03WWE2F44');
+  </script>
+
+  <!-- imported in PaLM-E -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+  <link rel="stylesheet" href="https://github.com/palm-e/palm-e.github.io/blob/main/css/app.css">
+
+  <link rel="stylesheet" href="https://github.com/palm-e/palm-e.github.io/blob/main/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./static/css/viewer_styles.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+  
+  <script src="https://github.com/palm-e/palm-e.github.io/blob/main/js/app.js"></script>
+
+  <!-- 3D Viewer -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/PLYLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/MTLLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/2.3.15/cytoscape.js"></script>
+  <script src="https://unpkg.com/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/2.13.1/core.min.js"></script>
+
+  <!-- imported in Nerfies -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <!-- <link rel="stylesheet" href="./static/css/fontawesome.all.min.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./assets/logo025.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <a class="navbar-item" target="_blank" href="https://sg-3d.github.io">
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>
+        </a>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+          More Research
+          </a>
+          <div class="navbar-dropdown">
+          <a class="navbar-item" target="_blank" href="https://scenediffuser.github.io/">
+              SceneDiffuser
+          </a>
+          <a class="navbar-item" target="_blank" href="https://sqa3d.github.io/">
+              SQA3D
+          </a>
+          <a class="navbar-item" target="_blank" href="https://arnold-benchmark.github.io/">
+              ARNOLD
+          </a>
+          <a class="navbar-item" target="_blank" href="https://3d-vista.github.io/">
+              3D-VisTA
+          </a>
+          <a class="navbar-item" target="_blank" href="https://embodied-generalist.github.io/">
+              LEO
+          </a>
+          <a class="navbar-item" target="_blank" href="https://scene-verse.github.io/">
+              SceneVerse
+          </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- need changing -->
+            <!-- <img src="assets/logo025.png" width="30%" style="margin:0 0 30px 0" > -->
+            <!-- <h1 class="title is-1 publication-title"><span style="font-variant: small-caps;">SceneVerse</span>: Scaling 3D Vision-Language Learning for Grounded Scene Understanding</h1> -->
+            <h1 class="title is-1 publication-title">SG3D: Task-oriented Sequential Grounding in 3D Scenes</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a target="_blank" href="https://github.com/zfzhang-thu">Zhuofan Zhang</a><sup>1,2</sup>,</span>
+              <span class="author-block">
+                <a target="_blank" href="https://github.com/zhuziyu-edward">Ziyu Zhu</a><sup>1,2</sup>,</span>
+              <span class="author-block">
+                <a target="_blank" href="https://github.com/Pengxiang-Li">Pengxiang Li</a><sup>1,3</sup>,</span>
+              <span class="author-block">
+                <a target="_blank" href="https://tengyu.ai/">Tengyu Liu</a><sup>1</sup>,</span>
+              <br/>
+              <span class="author-block">
+                <a target="_blank" href="https://jeasinema.github.io/">Xiaojian Ma</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a target="_blank" href="https://yixchen.github.io/">Yixin Chen</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a target="_blank" href="https://buzz-beater.github.io/">Baoxiong Jia</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a target="_blank" href="https://siyuanhuang.com/">Siyuan Huang</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a target="_blank" href="https://liqing-ustc.github.io/">Qing Li</a><sup>1&#x1f4e7</sup></span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Beijing Institute for General Artificial Intelligence (BIGAI)</span>
+              <span class="author-block"><sup>2</sup>Tsinghua University</span>
+              <span class="author-block"><sup>3</sup>Beijing Institute of Technology</span>
+            </div>
+
+            <!-- <p style="font-size: 0.9em; padding: 0.5em 0 0 0;">✶ indicates equal contribution</p> -->
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- Arxiv Link. need changing -->
+                <!-- <span class="link-block">
+                  <a target="_blank" href="https://arxiv.org/abs/2401.09340"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span> -->
+                <!-- Video Link. -->
+                <!-- <span class="link-block">
+                  <a target="_blank" href="https://youtu.be/UnujS0EVxKU"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span> -->
+                <!-- Code Link. need changing -->
+                <span class="link-block">
+                  <a target="_blank" href="https://github.com/sg-3d/sg3d"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                    </a>
+                </span>
+                <!-- Data Link. need changing -->
+                <span class="link-block">
+                  <!-- <a target="_blank" href="" -->
+                  <a target="_blank" href="https://huggingface.co/datasets/ZhuofanZhang/SG3D"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fa fa-database"></i>
+                    </span>
+                    <span>Data</span>
+                    </a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+
+      <div class="subtitle has-text-justified">
+        <p>
+        <b>TL;DR</b> We introduce SG3D, a large-scale dataset with 22,346 tasks and 112,236 steps in 4,895 real-world 3D scenes for Task-oriented Sequential Grounding in 3D environments. 
+        This new task requires agents to follow step-by-step instructions to locate objects sequentially. 
+        Our evaluation of three state-of-the-art 3D visual grounding models on SG3D shows significant challenges in task-oriented sequential grounding, highlighting the need for further research.
+        </p>
+        <br>
+        <!-- <img src="assets/overview.png" width="100%"> -->
+        <br>
+      </div>
+
+      <!-- Paper video -->
+      <!-- <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="publication-video">
+
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/UnujS0EVxKU"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+          </div>
+        </div>
+      </div> -->
+      <!--/ Paper video -->
+
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Grounding natural language in physical 3D environments is essential for the advancement of embodied artificial intelligence. 
+              Current datasets and models for 3D visual grounding predominantly focus on identifying and localizing objects from static, object-centric descriptions. 
+              These approaches do not adequately address the dynamic and sequential nature of task-oriented grounding necessary for practical applications. 
+              In this work, we propose a new task: Task-oriented Sequential Grounding in 3D scenes, wherein an agent must follow detailed step-by-step instructions to complete daily activities by locating a sequence of target objects in indoor scenes. 
+              To facilitate this task, we introduce <span style="font-variant: small-caps;">SG3D</span>, a large-scale dataset containing 22,346 tasks with 112,236 steps across 4,895 real-world 3D scenes. 
+              The dataset is constructed using a combination of RGB-D scans from various 3D scene datasets and an automated task generation pipeline, followed by human verification for quality assurance. 
+              We adapted three state-of-the-art 3D visual grounding models to the sequential grounding task and evaluated their performance on SG3D. 
+              Our results reveal that while these models perform well on traditional benchmarks, they face significant challenges with task-oriented sequential grounding, underscoring the need for further research in this area.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+
+      <!-- Data -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Data</h2>
+
+          <div class="content has-text-justified">
+            <p>
+              <b>SG3D</b> contains 3D scenes curated from diverse existing datasets of real environments.
+              Harnessing the power of 3D scene graphs and GPT-4, we introduce an automated pipeline to generate tasks. 
+              Post-generation, we manually verify the test set data to ensure data quality.
+            </p>
+          </div>
+          <div style="width: 100%; margin: 0 auto;">
+              <img src="assets/task_generation-1.png" width="100%">
+          </div>
+
+        </div>
+      </div>
+      <!--/ Data -->
+    </div>
+  </section>
+
+  <!-- Video Carousel-->
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item has-text-centered">
+            <video poster="" id="3rscan" autoplay controls muted loop width="90%">
+              <source src="./assets/videos/3rscan_demo.mp4"
+                      type="video/mp4">
+            </video>
+            <h1 class="title is-4">Example of 3RScan: 2e4a3964-d452-21a0-9de5-4f7895499143</h1>
+          </div>
+          <div class="item has-text-centered">
+            <video poster="" id="scannet_0697" autoplay controls muted loop width="90%">
+              <source src="./assets/videos/scannet_0697_demo.mp4"
+                      type="video/mp4">
+            </video>
+            <h1 class="title is-4">Example of ScanNet: scene0697_00</h1>
+          </div>
+          <div class="item has-text-centered">
+            <video poster="" id="multiscan" autoplay controls muted loop width="90%">
+              <source src="./assets/videos/multiscan_demo.mp4"
+                      type="video/mp4">
+            </video>
+            <h1 class="title is-4">Example of MultiScan: scene_00038_00</h1>
+          </div>
+          <div class="item has-text-centered">
+            <video poster="" id="scannet_0025" autoplay controls muted loop width="90%">
+              <source src="./assets/videos/scannet_0025_demo.mp4"
+                      type="video/mp4">
+            </video>
+            <h1 class="title is-4">Example of ScanNet: scene0025_00</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Video Carousel-->
+
+  <section class="section">
+    <div class="container is-max-desktop">
+    <!-- Model -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+      <h2 class="title is-3">Model</h2>
+      </div>
+    </div>
+    <div class="content has-text-justified">
+      <p>
+        We adapted three state-of-the-art 3D visual grounding models (3D-VisTA, PQ3D, LEO) 
+        to the sequential grounding task and evaluated their performance on SG3D.
+        The results show they face significant challenges with task-oriented sequential grounding.
+      </p>
+      <img src="assets/model-1.png" width="100%">
+    </div>
+    <!--/ Model -->
+    
+    <!-- Data explorer -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+      <h2 class="title is-3">Data Explorer</h2>
+        <div class="content has-text-justified">
+          <p>
+            To use the data explorer, first <b>select</b> from the available scenes in the selection bar. The tasks and their corresponding steps will be displayed in the right column. <b>Click</b> on a step to visualize its target object with a red bounding box in the scene. All available objects could be found according to the segmentation visualization. Best viewed on monitors.
+            <br>
+            <span class="tag">Control</span>: <span class="tag">Click + Drag = Rotate</span> <span class="tag">Ctrl + Drag = Translate</span> <span class="tag">Scroll Up/Down = Zoom In/Out</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <div class="select is-info custom-select">
+          <select id="scene_list"></select>
+        </div>
+        <!-- <div class="columns is-centered is-gapless" id="options">
+          <div class="column is-one-fifths">
+            <button id="scene_caption" for="scene_caption" class="button is-fullwidth is-outlined is-normal scene_caption">Scene Caption</label>
+          </div>
+          <div class="column">
+            <input type="checkbox" id="obj_cap">
+            <label id="obj_cap" for="obj_cap" class="button is-fullwidth is-normal obj_cap">Object Caption</label>
+          </div>
+          <div class="column">
+            <input type="checkbox" id="anno">
+            <label id="anno" for="anno" class="button is-fullwidth is-normal anno">Refer (Annotated)</label>
+          </div>
+          <div class="column">
+            <input type="checkbox" id="template">
+            <label id="template" for="template" class="button is-fullwidth is-normal template">Refer (Template)</label>
+          </div>
+          <div class="column">
+            <input type="checkbox" id="rewrite">
+            <label id="rewrite" for="rewrite" class="button is-fullwidth is-normal rewrite">Refer (LLM refined)</label>
+          </div>
+          <div class="column">
+            <input type="checkbox" id="seq_grounding">
+            <label id="seq_grounding" for="seq_grounding" class="button is-fullwidth is-normal seq_grounding">Seq Grounding</label>
+          </div>
+        </div> -->
+        <div class="columns is-full-width is-centered is-gapless">
+          <div class="column is-three-quarters">
+            <div class="card">
+              <div id="mesh_viewer"></div>
+              <div class="card-content is-overlay is-pulled-right m-0 p-0">
+                <div id="segmentation"></div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-quarter">
+            <div id="chat-container">
+              <div class="chat-body">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>          
+    </div>
+      </div>
+    </div>
+    <!-- Data explorer -->
+    
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code class="language-bibtex">@article{sg-3d,
+  title={Task-oriented Sequential Grounding in 3D Scenes},
+  author={Zhang, Zhuofan and Zhu, Ziyu and Li, Pengxiang and Liu, Tengyu and Ma, Xiaojian and Chen, Yixin and Jia, Baoxiong and Huang, Siyuan and Li, Qing},
+  year={2024}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+        <p>
+          This website is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+        </p>
+        <p>
+            Website template adapted from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+        </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="./static/js/viewer.js"></script>
+
+</body>
+</html>
