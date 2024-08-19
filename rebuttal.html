@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="SG3D: Task-oriented Sequential Grounding in 3D Scenes">
+  <meta name="keywords" content="3D visual grounding, 3D scene understanding, vision and language, grounded task planning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SG3D</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N03WWE2F44"></script> <!-- TODO: change website -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-N03WWE2F44');
+  </script>
+
+  <!-- imported in PaLM-E -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+  <link rel="stylesheet" href="https://github.com/palm-e/palm-e.github.io/blob/main/css/app.css">
+
+  <link rel="stylesheet" href="https://github.com/palm-e/palm-e.github.io/blob/main/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./static/css/viewer_styles.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+  
+  <script src="https://github.com/palm-e/palm-e.github.io/blob/main/js/app.js"></script>
+
+  <!-- 3D Viewer -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/PLYLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/MTLLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/2.3.15/cytoscape.js"></script>
+  <script src="https://unpkg.com/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/TypewriterJS/2.13.1/core.min.js"></script>
+
+  <!-- imported in Nerfies -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <!-- <link rel="stylesheet" href="./static/css/fontawesome.all.min.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./assets/logo025.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- need changing -->
+            <!-- <img src="assets/logo025.png" width="30%" style="margin:0 0 30px 0" > -->
+            <!-- <h1 class="title is-1 publication-title"><span style="font-variant: small-caps;">SceneVerse</span>: Scaling 3D Vision-Language Learning for Grounded Scene Understanding</h1> -->
+            <h1 class="title is-1 publication-title">Impact on Embodied AI Tasks</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="content has-text-justified">
+        <!-- <h1 class="title">Impact on Embodied AI Tasks</h1> -->
+        <p>
+          We demonstrate the LEO model's ability in task-oriented navigation within HM3D environments by passing grounding results to a navigation module.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item has-text-centered">
+          <video poster="" id="hm3d_nav_1" autoplay controls muted loop width="55%">
+            <source src="./assets/videos/hm3d_demo1.mp4"
+                    type="video/mp4">
+          </video>
+          <h1 class="title is-4">Task 1</h1>
+        </div>
+        <div class="item has-text-centered">
+          <video poster="" id="hm3d_nav_2" autoplay controls muted loop width="55%">
+            <source src="./assets/videos/hm3d_demo2.mp4"
+                    type="video/mp4">
+          </video>
+          <h1 class="title is-4">Task 2</h1>
+        </div>
+        <div class="item has-text-centered">
+          <video poster="" id="hm3d_nav_3" autoplay controls muted loop width="55%">
+            <source src="./assets/videos/hm3d_demo3.mp4"
+                    type="video/mp4">
+          </video>
+          <h1 class="title is-4">Task 3</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="./static/js/viewer.js"></script>
+
+</body>
+</html>
