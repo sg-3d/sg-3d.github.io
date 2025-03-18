@@ -95,21 +95,26 @@ function renderMessageEleSeq(data, type) {
         const chatBody = document.querySelector(".chat-body");
         let className = "chatbot-message";
         // Handle seq_grounding data
-        data.forEach(item => {
+        data.forEach((item, index) => {
             const taskEle = document.createElement("div");
             taskEle.classList.add(className);
             taskEle.classList.add(type);
             taskEle.style.fontSize = "16px";
             taskEle.style.fontWeight = "bold";
-            taskEle.style.backgroundColor = "red";
-            taskEle.textContent = item.task_description;
+            taskEle.style.backgroundColor = "#87CEEB";  // sky blue
+            taskEle.style.border = "double";
+            taskEle.textContent = `Task ${index + 1}: ${item.task_description}`;
             chatBody.append(taskEle);
             item.action_steps.forEach(step => {
                 const stepEle = document.createElement("button");
                 stepEle.classList.add(className);
                 stepEle.classList.add(type);
                 stepEle.style.textAlign = "left";
-                stepEle.style.fontWeight = "bold";
+                stepEle.style.fontSize = "16px";
+                stepEle.style.fontWeight = "normal";
+                stepEle.style.backgroundColor = "#FFE066";  // light gold
+                stepEle.style.color = "black";
+                stepEle.style.border = "outset";
                 stepEle.textContent = step.action + " (" + step.label + ")";
                 stepEle.addEventListener("click", function() {
                     console.log("Step element clicked!");
