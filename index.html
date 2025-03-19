@@ -290,9 +290,8 @@
     </div>
   </section>
 
-  <!-- Video Carousel-->
-  <section class="hero is-light is-small mb-6" style="background-color: white;">
-    <div class="hero-body">
+  <!-- Data Explorer-->
+  <section class="mb-6" style="background-color: white;">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column is-full-width">
@@ -300,56 +299,57 @@
   
             <div class="content has-text-justified">
               <p>
-                Here we present a few examples from the <b>SG3D</b> dataset. Each task example consists of a sequence of steps, where each step requiring grounding a target object in the scene.
+                Here we present a few examples from the <b>SG3D</b> dataset via a data explorer. Each task example consists of a sequence of steps, where each step requiring grounding a target object in the scene.
+              </p>
+              <p>
+                To use the data explorer, first <b>select</b> from the available scenes in the selection bar. The tasks and their corresponding steps will be displayed in the right column. <b>Click</b> on a step to visualize its target object with a red bounding box in the scene. All available objects could be found according to the segmentation visualization. Best viewed on monitors.
+                <br>
+                <span class="tag">Control</span>: <span class="tag">Click + Drag = Rotate</span> <span class="tag">Ctrl + Drag = Translate</span> <span class="tag">Scroll Up/Down = Zoom In/Out</span>
               </p>
             </div>
   
           </div>
         </div>
-        <div id="results-carousel" class="carousel results-carousel">
-          <div class="item has-text-centered">
-            <video poster="" id="3rscan" autoplay controls muted loop width="95%">
-              <source src="./assets/videos/3rscan_demo.mp4"
-                      type="video/mp4">
-            </video>
-            <h1 class="title is-4">Example of 3RScan: 2e4a3964-d452-21a0-9de5-4f7895499143</h1>
+      
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="select is-info custom-select">
+            <select id="scene_list"></select>
           </div>
-          <div class="item has-text-centered">
-            <video poster="" id="scannet_0697" autoplay controls muted loop width="95%">
-              <source src="./assets/videos/scannet_0697_demo.mp4"
-                      type="video/mp4">
-            </video>
-            <h1 class="title is-4">Example of ScanNet: scene0697_00</h1>
-          </div>
-          <div class="item has-text-centered">
-            <video poster="" id="multiscan" autoplay controls muted loop width="95%">
-              <source src="./assets/videos/multiscan_demo.mp4"
-                      type="video/mp4">
-            </video>
-            <h1 class="title is-4">Example of MultiScan: scene_00038_00</h1>
-          </div>
-          <div class="item has-text-centered">
-            <video poster="" id="scannet_0025" autoplay controls muted loop width="95%">
-              <source src="./assets/videos/scannet_0025_demo.mp4"
-                      type="video/mp4">
-            </video>
-            <h1 class="title is-4">Example of ScanNet: scene0025_00</h1>
+          <div class="columns is-full-width is-centered is-gapless">
+            <div class="column is-three-quarters">
+              <div class="card">
+                <div id="mesh_viewer"></div>
+                <div class="card-content is-overlay is-pulled-right m-0 p-0">
+                  <div id="segmentation"></div>
+                </div>
+              </div>
+            </div>
+            <div class="column is-one-quarter">
+              <div id="chat-container">
+                <div class="chat-body">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <!-- Video Carousel-->
+  <!-- Data Explorer-->
 
+  <br/><br/>
   <section class="hero is-light is-small"  style="background-color: white;">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
+        <div class="column is-full-width">
+          <h2 class="title is-3">Examples from the Sequential Navigation Benchmark</h2>
         <div class="content has-text-justified">
-          <h1 class="title">Episodes from the Sequential Navigation Benchmark</h1>
           <p>
             For task-oriented sequential navigation, each task represents a navigation episode. The agent is required to sequentially navigate to the target objects in the scene. The following videos show the navigation episodes in the SG3D-Nav dataset.
           </p>
         </div>
+      </div>
       </div>
     </div>
     <div class="hero-body">
@@ -413,102 +413,39 @@
     <!--/ Grounding Results -->
 
     <br/><br/>
-    <!-- Navigation Results -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-      <h2 class="title is-3">Results on Sequential Navigation Benchmark</h2>
-      </div>
-    </div>
-    <div class="content has-text-justified">
-      <p>
-        We benchmark two approaches on the SG3D-Nav benchmark: a modular agent and an end-to-end policy.
-      </p>
-      <img src="assets/navigation results.png" width="50%" style="display: block; margin: auto;">
-    </div>
-    <!--/ Navigation Results -->
-
-    <br/><br/>
-    <!-- Ablation -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-      <h2 class="title is-3">Effect of Removing Sequential Context</h2>
-      </div>
-    </div>
-    <div class="content has-text-justified">
-      <p>
-        The significant performance degradation of grounding and navigation methods when sequential context is removed indicates that the sequential context is crucial for both grounding and navigation tasks.
-      </p>
-      <img src="assets/context_ablation.png" width="70%" style="display: block; margin: auto;">
-    </div>
-    <!--/ Ablation -->
-    
-    <br/><br/>
-    <!-- Data explorer -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-      <h2 class="title is-3">Data Explorer</h2>
+    <!-- Dual-Column Layout -->
+    <div class="columns">
+      <!-- Left Column: Results on Sequential Navigation Benchmark -->
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-3">Results on Sequential Navigation Benchmark</h2>
+          </div>
+        </div>
         <div class="content has-text-justified">
           <p>
-            To use the data explorer, first <b>select</b> from the available scenes in the selection bar. The tasks and their corresponding steps will be displayed in the right column. <b>Click</b> on a step to visualize its target object with a red bounding box in the scene. All available objects could be found according to the segmentation visualization. Best viewed on monitors.
-            <br>
-            <span class="tag">Control</span>: <span class="tag">Click + Drag = Rotate</span> <span class="tag">Ctrl + Drag = Translate</span> <span class="tag">Scroll Up/Down = Zoom In/Out</span>
+            We benchmark two approaches on the SG3D-Nav benchmark: a modular agent and an end-to-end policy.
           </p>
+          <img src="assets/navigation results.png" width="80%" style="display: block; margin: auto;">
+        </div>
+      </div>
+    
+      <!-- Right Column: Effect of Removing Sequential Context -->
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-3">Effect of Removing Sequential Context</h2>
+          </div>
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            The significant performance degradation of grounding and navigation methods when sequential context is removed indicates that the sequential context is crucial for both grounding and navigation tasks.
+          </p>
+          <img src="assets/context_ablation.png" width="90%" style="display: block; margin: auto;">
         </div>
       </div>
     </div>
-
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <div class="select is-info custom-select">
-          <select id="scene_list"></select>
-        </div>
-        <!-- <div class="columns is-centered is-gapless" id="options">
-          <div class="column is-one-fifths">
-            <button id="scene_caption" for="scene_caption" class="button is-fullwidth is-outlined is-normal scene_caption">Scene Caption</label>
-          </div>
-          <div class="column">
-            <input type="checkbox" id="obj_cap">
-            <label id="obj_cap" for="obj_cap" class="button is-fullwidth is-normal obj_cap">Object Caption</label>
-          </div>
-          <div class="column">
-            <input type="checkbox" id="anno">
-            <label id="anno" for="anno" class="button is-fullwidth is-normal anno">Refer (Annotated)</label>
-          </div>
-          <div class="column">
-            <input type="checkbox" id="template">
-            <label id="template" for="template" class="button is-fullwidth is-normal template">Refer (Template)</label>
-          </div>
-          <div class="column">
-            <input type="checkbox" id="rewrite">
-            <label id="rewrite" for="rewrite" class="button is-fullwidth is-normal rewrite">Refer (LLM refined)</label>
-          </div>
-          <div class="column">
-            <input type="checkbox" id="seq_grounding">
-            <label id="seq_grounding" for="seq_grounding" class="button is-fullwidth is-normal seq_grounding">Seq Grounding</label>
-          </div>
-        </div> -->
-        <div class="columns is-full-width is-centered is-gapless">
-          <div class="column is-three-quarters">
-            <div class="card">
-              <div id="mesh_viewer"></div>
-              <div class="card-content is-overlay is-pulled-right m-0 p-0">
-                <div id="segmentation"></div>
-              </div>
-            </div>
-          </div>
-          <div class="column is-one-quarter">
-            <div id="chat-container">
-              <div class="chat-body">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>          
-    </div>
-      </div>
-    </div>
-    <!-- Data explorer -->
+    <!--/ Dual-Column Layout -->
     
   </div>
 </section>
